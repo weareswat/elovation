@@ -5,6 +5,8 @@ class Player < ActiveRecord::Base
     end
   end
 
+  has_many :rating_infos
+
   has_and_belongs_to_many :results do
     def against(opponent)
       player = proxy_association.owner.id

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 5) do
+ActiveRecord::Schema.define(:version => 6) do
 
   create_table "games", :force => true do |t|
     t.string   "name",       :null => false
@@ -42,6 +42,22 @@ ActiveRecord::Schema.define(:version => 5) do
   end
 
   add_index "rating_history_events", ["rating_id"], :name => "index_rating_history_events_on_rating_id"
+
+  create_table "rating_infos", :force => true do |t|
+    t.integer  "rating_id"
+    t.integer  "player_id"
+    t.boolean  "won",        :default => false
+    t.integer  "points",     :default => 0
+    t.integer  "best_spree", :default => 0
+    t.integer  "success_3",  :default => 0
+    t.integer  "success_2",  :default => 0
+    t.integer  "success_1",  :default => 0
+    t.integer  "fail_3",     :default => 0
+    t.integer  "fail_2",     :default => 0
+    t.integer  "fail_1",     :default => 0
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
 
   create_table "ratings", :force => true do |t|
     t.integer  "player_id",  :null => false
