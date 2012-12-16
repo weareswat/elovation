@@ -9,14 +9,30 @@ class ResultService
     end
 
     result = game.results.build(
-      :winner_id => params[:winner_id],
-      :loser_id => params[:loser_id],
       :players => players
     )
 
     params[:result][:result_info].each do |data|
-      result.result_infos.build(data);
+      result.result_infos.build(data) if data[:player_id].present?
     end
+
+    sorted = result.result_infos.map{|info| { 
+      :info => info, 
+      :player_id => info.player_id, 
+      :points => info.points, 
+      :tie_breaker => info.tie_breaker
+    }}
+    sorted.sort do |a, b|
+      if a[:tie_breaker].present? && b[:tie_breaker].present?
+        b[:tie_breaker] <=> a[:tie_breaker]
+      else
+        b[:points] <=> a[:points]
+      end
+    end
+    sorted.reverse!
+    result.winner_id = sorted.first[:player_id]
+    result.loser_id = sorted.last[:player_id]
+    sorted.first[:info].won = true
 
     if result.valid?
       Result.transaction do
