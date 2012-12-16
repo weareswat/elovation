@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 5) do
+ActiveRecord::Schema.define(:version => 6) do
 
   create_table "games", :force => true do |t|
     t.string   "name",       :null => false
@@ -54,6 +54,23 @@ ActiveRecord::Schema.define(:version => 5) do
 
   add_index "ratings", ["game_id"], :name => "index_ratings_on_game_id"
   add_index "ratings", ["player_id"], :name => "index_ratings_on_player_id"
+
+  create_table "result_infos", :force => true do |t|
+    t.integer  "result_id"
+    t.integer  "player_id"
+    t.boolean  "won",         :default => false
+    t.integer  "points",      :default => 0
+    t.integer  "best_spree"
+    t.integer  "success_3"
+    t.integer  "success_2"
+    t.integer  "success_1"
+    t.integer  "fail_3"
+    t.integer  "fail_2"
+    t.integer  "fail_1"
+    t.integer  "tie_breaker"
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+  end
 
   create_table "results", :force => true do |t|
     t.integer  "game_id",    :null => false

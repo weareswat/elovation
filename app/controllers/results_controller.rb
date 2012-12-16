@@ -12,6 +12,17 @@ class ResultsController < ApplicationController
     end
   end
 
+  def create_31
+    response = ResultService.create_31(@game, params)
+
+    if response.success?
+      redirect_to game_path(@game)
+    else
+      @result = response.result
+      render :new_31
+    end
+  end
+
   def destroy
     result = @game.results.find_by_id(params[:id])
 
@@ -22,6 +33,12 @@ class ResultsController < ApplicationController
 
   def new
     @result = Result.new
+  end
+
+  def new_31
+    @result = Result.new
+    @result.result_infos.push(ResultInfo.new)
+    @result.result_infos.push(ResultInfo.new)
   end
 
   def _find_game
