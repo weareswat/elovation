@@ -58,6 +58,9 @@ Elovation::Application.routes.draw do
   match '/dashboard' => 'dashboard#show', :as => :dashboard
   root :to => 'dashboard#show'
 
+  match '/game/:game_id/new_31' => 'results#new_31', :as => :new_31_game_result
+  match '/game/:game_id/create_31' => 'results#create_31', :as => :create_31_game_result
+
   # See how all your routes lay out with "rake routes"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.

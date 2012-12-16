@@ -3,6 +3,8 @@ class Result < ActiveRecord::Base
   belongs_to :winner, :class_name => "Player"
   belongs_to :loser, :class_name => "Player"
   belongs_to :game
+  has_many :result_infos
+  accepts_nested_attributes_for :result_infos
 
   scope :most_recent_first, :order => "created_at desc"
   scope :for_game, lambda { |game| where(:game_id => game.id) }

@@ -5,6 +5,8 @@ class Player < ActiveRecord::Base
     end
   end
 
+  has_many :result_infos
+
   has_and_belongs_to_many :results do
     def against(opponent)
       player = proxy_association.owner.id
@@ -40,7 +42,7 @@ class Player < ActiveRecord::Base
   end
 
   def recent_results
-    results.order("created_at DESC").limit(5)
+    results.order("created_at DESC").limit(25)
   end
 
   def rewind_rating!(game)
