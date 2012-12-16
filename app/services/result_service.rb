@@ -22,14 +22,18 @@ class ResultService
       :points => info.points, 
       :tie_breaker => info.tie_breaker
     }}
-    sorted.sort do |a, b|
+    sorted.sort! do |a, b|
       if a[:tie_breaker].present? && b[:tie_breaker].present?
-        b[:tie_breaker] <=> a[:tie_breaker]
+        a[:tie_breaker] <=> b[:tie_breaker]
       else
-        b[:points] <=> a[:points]
+        a[:points] <=> b[:points]
       end
     end
     sorted.reverse!
+    
+    #sorted.reverse!
+    debug = sorted.map {|s| {:name => s[:player].name, :points => s[:points]}}
+
     result.winner_id = sorted.first[:player].id
     result.loser_id = sorted.last[:player].id
     sorted.first[:info].won = true
