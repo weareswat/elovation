@@ -3,8 +3,9 @@ class ResultService
 
   def self.create_31(game, params)
     players = []
-    params[:result][:winner_id].each do |data|
-      players.push Player.find(data)
+    params[:result][:result_info].each do |data|
+      player = Player.find(data[:player_id])
+      players.push player 
     end
 
     result = game.results.build(
@@ -12,6 +13,10 @@ class ResultService
       :loser_id => params[:loser_id],
       :players => players
     )
+
+    params[:result][:result_info].each do |data|
+      result.result_infos.build(data);
+    end
 
     if result.valid?
       Result.transaction do

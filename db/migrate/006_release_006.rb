@@ -14,6 +14,7 @@ class Release006 < ActiveRecord::Migration
       t.integer :fail_3, :default => 0
       t.integer :fail_2, :default => 0
       t.integer :fail_1, :default => 0
+      t.integer :tie_breaker
 
       t.timestamps
     end

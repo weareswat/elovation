@@ -58,17 +58,18 @@ ActiveRecord::Schema.define(:version => 6) do
   create_table "result_infos", :force => true do |t|
     t.integer  "result_id"
     t.integer  "player_id"
-    t.boolean  "won",        :default => false
-    t.integer  "points",     :default => 0
-    t.integer  "best_spree", :default => 0
-    t.integer  "success_3",  :default => 0
-    t.integer  "success_2",  :default => 0
-    t.integer  "success_1",  :default => 0
-    t.integer  "fail_3",     :default => 0
-    t.integer  "fail_2",     :default => 0
-    t.integer  "fail_1",     :default => 0
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.boolean  "won",         :default => false
+    t.integer  "points",      :default => 0
+    t.integer  "best_spree",  :default => 0
+    t.integer  "success_3",   :default => 0
+    t.integer  "success_2",   :default => 0
+    t.integer  "success_1",   :default => 0
+    t.integer  "fail_3",      :default => 0
+    t.integer  "fail_2",      :default => 0
+    t.integer  "fail_1",      :default => 0
+    t.integer  "tie_breaker"
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
   create_table "results", :force => true do |t|
