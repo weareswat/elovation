@@ -1,4 +1,36 @@
 class ResultService
+
+
+  def self.create_31(game, params)
+    players = []
+    params[:result][:winner_id].each do |data|
+      players.push Player.find(data)
+    end
+
+    result = game.results.build(
+      :winner_id => params[:winner_id],
+      :loser_id => params[:loser_id],
+      :players => players
+    )
+
+    if result.valid?
+      Result.transaction do
+        RatingService.update(game, result.winner, result.loser)
+        result.save!
+
+        OpenStruct.new(
+          :success? => true,
+          :result => result
+        )
+      end
+    else
+      OpenStruct.new(
+        :success? => false,
+        :result => result
+      )
+    end
+  end
+
   def self.create(game, params)
     players = []
     begin

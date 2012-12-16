@@ -43,8 +43,20 @@ ActiveRecord::Schema.define(:version => 6) do
 
   add_index "rating_history_events", ["rating_id"], :name => "index_rating_history_events_on_rating_id"
 
-  create_table "rating_infos", :force => true do |t|
-    t.integer  "rating_id"
+  create_table "ratings", :force => true do |t|
+    t.integer  "player_id",  :null => false
+    t.integer  "game_id",    :null => false
+    t.integer  "value",      :null => false
+    t.boolean  "pro",        :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "ratings", ["game_id"], :name => "index_ratings_on_game_id"
+  add_index "ratings", ["player_id"], :name => "index_ratings_on_player_id"
+
+  create_table "result_infos", :force => true do |t|
+    t.integer  "result_id"
     t.integer  "player_id"
     t.boolean  "won",        :default => false
     t.integer  "points",     :default => 0
@@ -58,18 +70,6 @@ ActiveRecord::Schema.define(:version => 6) do
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
   end
-
-  create_table "ratings", :force => true do |t|
-    t.integer  "player_id",  :null => false
-    t.integer  "game_id",    :null => false
-    t.integer  "value",      :null => false
-    t.boolean  "pro",        :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "ratings", ["game_id"], :name => "index_ratings_on_game_id"
-  add_index "ratings", ["player_id"], :name => "index_ratings_on_player_id"
 
   create_table "results", :force => true do |t|
     t.integer  "game_id",    :null => false

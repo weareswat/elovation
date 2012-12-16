@@ -1,0 +1,38 @@
+<style>
+  input[type=text] {
+    width: 50px;
+  }
+</style>
+<%= form_for @result, :url => create_31_game_result_path(@game), :html => {:class => "well form-search"} do |f| %>
+  <%= f.error_messages %>
+  <table id="ratings">
+    <tr>
+      <th>Player</th>
+      <th>Points</th>
+      <th>Success3</th>
+      <th>Fail3</th>
+      <th>Success2</th>
+      <th>Fail2</th>
+      <th>Success1</th>
+      <th>Fail1</th>
+    </tr>
+  <% @result.result_infos.each do |i| %>
+    <%= f.fields_for i, :index => '' do |info| %>
+    <tr>
+      <td><%= info.select :player_id, player_options, {:include_blank => 'Select a Player'} %></td>
+      <td><%= info.text_field :points %></td>
+      <td><%= info.text_field :success_3 %></td>
+      <td><%= info.text_field :fail_3 %></td>
+      <td><%= info.text_field :success_2 %></td>
+      <td><%= info.text_field :fail_2 %></td>
+      <td><%= info.text_field :success_1 %></td>
+      <td><%= info.text_field :fail_1 %></td>
+    </tr>
+    <% end %>
+  <% end %>
+  </table>
+
+  <span class="inline-submit">
+    <%= f.submit :class => "btn btn-primary" %>
+  </span>
+<% end %>

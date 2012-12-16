@@ -4,7 +4,6 @@ class Rating < ActiveRecord::Base
   belongs_to :game
   belongs_to :player
   has_many :history_events, :class_name => "RatingHistoryEvent", :dependent => :destroy, :order => "created_at DESC"
-  has_many :rating_infos
 
   def active?
     if most_recent_result

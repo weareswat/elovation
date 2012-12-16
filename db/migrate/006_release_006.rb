@@ -1,7 +1,7 @@
 class Release006 < ActiveRecord::Migration
   def up
-    create_table :rating_infos do |t|
-      t.references :rating
+    create_table :result_infos do |t|
+      t.references :result
       t.references :player
 
       t.boolean :won, :default => false
