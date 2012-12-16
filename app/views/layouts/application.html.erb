@@ -40,7 +40,7 @@
               <span><%= link_to "Add", new_player_path, :class => "btn btn-small btn-sidebar" %></span>
             </li>
             <% Player.all.sort_by(&:name).each do |player| %>
-              <li class="<%= "active" if @player == player %>">
+              <li style='float:left' class="<%= "active" if @player == player %>">
                 <%= image_tag(gravatar_url(player, :size => 80)) %>
                 <%= link_to player.name, player_path(player) %>
               </li>
