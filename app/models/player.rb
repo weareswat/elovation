@@ -42,7 +42,7 @@ class Player < ActiveRecord::Base
   end
 
   def recent_results
-    results.order("created_at DESC").limit(5)
+    results.order("created_at DESC").limit(25)
   end
 
   def rewind_rating!(game)
