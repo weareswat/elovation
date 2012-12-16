@@ -2,14 +2,13 @@ class ResultService
 
 
   def self.create_31(game, params)
-    players = []
+    players = {}
     params[:result][:result_info].each do |data|
-      player = Player.find(data[:player_id])
-      players.push player 
+      players[data[:player_id].to_i] = Player.find(data[:player_id]) if data[:player_id].present?
     end
 
     result = game.results.build(
-      :players => players
+      :players => players.map{|k,v| v}
     )
 
     params[:result][:result_info].each do |data|
@@ -19,6 +18,7 @@ class ResultService
     sorted = result.result_infos.map{|info| { 
       :info => info, 
       :player_id => info.player_id, 
+      :player => players[info.player_id],
       :points => info.points, 
       :tie_breaker => info.tie_breaker
     }}
@@ -30,13 +30,16 @@ class ResultService
       end
     end
     sorted.reverse!
-    result.winner_id = sorted.first[:player_id]
-    result.loser_id = sorted.last[:player_id]
+    result.winner_id = sorted.first[:player].id
+    result.loser_id = sorted.last[:player].id
     sorted.first[:info].won = true
 
     if result.valid?
       Result.transaction do
-        RatingService.update(game, result.winner, result.loser)
+        winner = sorted.shift
+        sorted.each do |loser|
+          RatingService.update(game, winner[:player], loser[:player])
+        end
         result.save!
 
         OpenStruct.new(
