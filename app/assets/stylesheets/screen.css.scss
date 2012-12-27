@@ -32,3 +32,11 @@ div.description {
 .gray {
   color: darkgray;
 }
+
+table.ratings tr td {
+  padding:5px 10px;
+}
+
+table.ratings tr:hover {
+  background-color: #DDD;
+}
